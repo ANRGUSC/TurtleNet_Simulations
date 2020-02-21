@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="lava_tunnel">
+    <static>true</static>
+    <link name="lava_tunnel">
+      <pose>0 0 0 0 0 0</pose>
+      <collision name="lava_tunnel_collision">
+        <geometry>
+          <mesh>
+            <uri>model://lava_tunnel/lava_tunnel.dae</uri>
+            <scale>0.5 0.5 0.5</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="lava_tunnel_visual">
+        <geometry>
+          <mesh>
+            <uri>model://lava_tunnel/lava_tunnel.dae</uri>
+            <scale>0.5 0.5 0.5</scale>
+          </mesh>
+        </geometry>
+        <cast_shadows>false</cast_shadows>
+        <material>
+          <ambient>0.3 0.5 0.3 1</ambient>
+          <diffuse>0.5 0.7 0.5 1</diffuse>
+          <specular>0.5 0.7 0.5 1</specular>
+          <emissive>0 0 0 1</emissive>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

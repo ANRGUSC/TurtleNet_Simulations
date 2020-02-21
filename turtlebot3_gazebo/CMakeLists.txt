@@ -58,10 +58,15 @@ add_executable(turtlebot3_drive src/turtlebot3_drive.cpp)
 add_dependencies(turtlebot3_drive ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(turtlebot3_drive ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 
+add_executable(new_drive src/new_drive.cpp)
+add_dependencies(new_drive ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(new_drive ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+
+
 ################################################################################
 # Install
 ################################################################################
-install(TARGETS turtlebot3_drive
+install(TARGETS turtlebot3_drive new_drive
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
@@ -69,7 +74,7 @@ install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
 
-install(DIRECTORY launch models rviz worlds 
+install(DIRECTORY launch models rviz worlds
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 

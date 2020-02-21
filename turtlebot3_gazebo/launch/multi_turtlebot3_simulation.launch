@@ -1,0 +1,54 @@
+<launch>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="first_tb3"  default="tb3_0"/>
+  <arg name="second_tb3" default="tb3_1"/>
+  <arg name="third_tb3"  default="tb3_2"/>
+  <arg name="fourth_tb3" default="tb3_3"/>
+  <arg name="real" default="false"/>
+  <arg name="sim" default="true"/>
+
+  <group if="$(arg sim)">
+      <group ns = "$(arg first_tb3)">
+          <param name="cmd_vel_topic_name" value="/$(arg first_tb3)/cmd_vel"/>
+          <node name="$(arg first_tb3)_drive" pkg="turtlebot3_gazebo" type="turtlebot3_drive" required="true" output="screen"/>
+      </group>
+
+      <group ns = "$(arg second_tb3)">
+          <param name="cmd_vel_topic_name" value="/$(arg second_tb3)/cmd_vel"/>
+          <node name="$(arg second_tb3)_drive" pkg="turtlebot3_gazebo" type="turtlebot3_drive" required="true" output="screen"/>
+      </group>
+
+      <group ns = "$(arg third_tb3)">
+          <param name="cmd_vel_topic_name" value="/$(arg third_tb3)/cmd_vel"/>
+          <node name="$(arg third_tb3)_drive" pkg="turtlebot3_gazebo" type="turtlebot3_drive" required="true" output="screen"/>
+      </group>
+
+      <group ns = "$(arg fourth_tb3)">
+          <param name="cmd_vel_topic_name" value="/$(arg fourth_tb3)/cmd_vel"/>
+          <node name="$(arg fourth_tb3)_drive" pkg="turtlebot3_gazebo" type="turtlebot3_drive" required="true" output="screen"/>
+      </group>
+  </group>
+
+  <group if="$(arg real)">
+      <group ns = "$(arg first_tb3)">
+          <param name="cmd_vel_topic_name" value="/$(arg first_tb3)/cmd_vel"/>
+          <node name="$(arg first_tb3)_drive" pkg="turtlebot3_gazebo" type="new_drive" required="true" output="screen"/>
+      </group>
+
+      <group ns = "$(arg second_tb3)">
+          <param name="cmd_vel_topic_name" value="/$(arg second_tb3)/cmd_vel"/>
+          <node name="$(arg second_tb3)_drive" pkg="turtlebot3_gazebo" type="new_drive" required="true" output="screen"/>
+      </group>
+
+      <group ns = "$(arg third_tb3)">
+          <param name="cmd_vel_topic_name" value="/$(arg third_tb3)/cmd_vel"/>
+          <node name="$(arg third_tb3)_drive" pkg="turtlebot3_gazebo" type="new_drive" required="true" output="screen"/>
+      </group>
+
+      <group ns = "$(arg fourth_tb3)">
+          <param name="cmd_vel_topic_name" value="/$(arg fourth_tb3)/cmd_vel"/>
+          <node name="$(arg fourth_tb3)_drive" pkg="turtlebot3_gazebo" type="new_drive" required="true" output="screen"/>
+      </group>
+  </group>
+
+</launch>

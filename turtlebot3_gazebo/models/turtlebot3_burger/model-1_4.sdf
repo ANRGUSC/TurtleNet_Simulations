@@ -1,6 +1,27 @@
 <?xml version="1.0" ?>
 <sdf version="1.4">
-  <model name="turtlebot3_burger">  
+  <model name="turtlebot3_burger">
+
+    <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometrySource>world</odometrySource>
+      <publishOdomTF>true</publishOdomTF>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+      <publishWheelTF>false</publishWheelTF>
+      <publishTf>true</publishTf>
+      <publishWheelJointState>true</publishWheelJointState>
+      <legacyMode>false</legacyMode>
+      <updateRate>30</updateRate>
+      <leftJoint>wheel_left_joint</leftJoint>
+      <rightJoint>wheel_right_joint</rightJoint>
+      <wheelSeparation>0.160</wheelSeparation>
+      <wheelDiameter>0.066</wheelDiameter>
+      <wheelAcceleration>1</wheelAcceleration>
+      <wheelTorque>10</wheelTorque>
+      <rosDebugLevel>na</rosDebugLevel>
+    </plugin>
 
     <link name="base">
 
@@ -116,6 +137,10 @@
             <stddev>0.01</stddev>
           </noise>
         </ray>
+        <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
+            <topicName>scan</topicName>
+            <frameName>base_scan</frameName>
+        </plugin>
       </sensor>
     </link>
 
@@ -181,7 +206,7 @@
         </inertia>
         <mass>0.1</mass>
       </inertial>
-    
+
       <collision name="right_wheel_collision">
         <pose>0.0 -0.08 0.023 -1.57 0 0</pose>
         <geometry>

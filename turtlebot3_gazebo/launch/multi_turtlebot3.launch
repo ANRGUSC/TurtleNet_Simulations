@@ -3,21 +3,27 @@
   <arg name="first_tb3"  default="tb3_0"/>
   <arg name="second_tb3" default="tb3_1"/>
   <arg name="third_tb3"  default="tb3_2"/>
+  <arg name="fourth_tb3" default="tb3_3"/>
 
-  <arg name="first_tb3_x_pos" default="-7.0"/>
-  <arg name="first_tb3_y_pos" default="-1.0"/>
+  <arg name="first_tb3_x_pos" default=" -2.0"/>
+  <arg name="first_tb3_y_pos" default=" 1.0"/>
   <arg name="first_tb3_z_pos" default=" 0.0"/>
-  <arg name="first_tb3_yaw"   default=" 1.57"/>
+  <arg name="first_tb3_yaw"   default=" 0.0"/>
 
-  <arg name="second_tb3_x_pos" default=" 7.0"/>
-  <arg name="second_tb3_y_pos" default="-1.0"/>
+  <arg name="second_tb3_x_pos" default=" -4.0"/>
+  <arg name="second_tb3_y_pos" default=" 1.0"/>
   <arg name="second_tb3_z_pos" default=" 0.0"/>
-  <arg name="second_tb3_yaw"   default=" 1.57"/>
+  <arg name="second_tb3_yaw"   default=" 0.1"/>
 
-  <arg name="third_tb3_x_pos" default=" 0.5"/>
-  <arg name="third_tb3_y_pos" default=" 3.0"/>
+  <arg name="third_tb3_x_pos" default=" -4.0"/>
+  <arg name="third_tb3_y_pos" default=" 4.0"/>
   <arg name="third_tb3_z_pos" default=" 0.0"/>
-  <arg name="third_tb3_yaw"   default=" 0.0"/>
+  <arg name="third_tb3_yaw"   default=" -0.1"/>
+
+  <arg name="fourth_tb3_x_pos" default=" -2.0"/>
+  <arg name="fourth_tb3_y_pos" default=" 4.0"/>
+  <arg name="fourth_tb3_z_pos" default=" 0.0"/>
+  <arg name="fourth_tb3_yaw"   default=" 0.2"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/>
@@ -26,7 +32,7 @@
     <arg name="gui" value="true"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
-  </include>  
+  </include>
 
   <group ns = "$(arg first_tb3)">
     <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
@@ -35,9 +41,13 @@
       <param name="publish_frequency" type="double" value="50.0" />
       <param name="tf_prefix" value="$(arg first_tb3)" />
     </node>
-    
+
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg first_tb3) -x $(arg first_tb3_x_pos) -y $(arg first_tb3_y_pos) -z $(arg first_tb3_z_pos) -Y $(arg first_tb3_yaw) -param robot_description" />
-  </group>
+    <param name="anchor0" value="$(arg second_tb3)"/>
+    <param name="anchor1" value="$(arg third_tb3)"/>
+    <param name="anchor2" value="$(arg fourth_tb3)"/>
+    <node pkg="turtlebot3_bringup" type="pozyx.py" name="turtlebot3_pozyx" output="screen" args="true $(arg first_tb3_x_pos) $(arg first_tb3_y_pos) $(arg first_tb3_yaw)"/>
+   </group>
 
   <group ns = "$(arg second_tb3)">
     <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
@@ -48,7 +58,11 @@
     </node>
 
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg second_tb3) -x $(arg second_tb3_x_pos) -y $(arg second_tb3_y_pos) -z $(arg second_tb3_z_pos) -Y $(arg second_tb3_yaw) -param robot_description" />
-  </group>
+    <param name="anchor0" value="$(arg first_tb3)"/>
+    <param name="anchor1" value="$(arg third_tb3)"/>
+    <param name="anchor2" value="$(arg fourth_tb3)"/>
+    <node pkg="turtlebot3_bringup" type="pozyx.py" name="turtlebot3_pozyx" output="screen" args="true $(arg second_tb3_x_pos) $(arg second_tb3_y_pos) $(arg second_tb3_yaw)"/>
+   </group>
 
   <group ns = "$(arg third_tb3)">
     <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
@@ -59,6 +73,25 @@
     </node>
 
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg third_tb3) -x $(arg third_tb3_x_pos) -y $(arg third_tb3_y_pos) -z $(arg third_tb3_z_pos) -Y $(arg third_tb3_yaw) -param robot_description" />
-  </group>
+    <param name="anchor0" value="$(arg first_tb3)"/>
+    <param name="anchor1" value="$(arg second_tb3)"/>
+    <param name="anchor2" value="$(arg fourth_tb3)"/>
+    <node pkg="turtlebot3_bringup" type="pozyx.py" name="turtlebot3_pozyx" output="screen" args="true $(arg third_tb3_x_pos) $(arg third_tb3_y_pos) $(arg third_tb3_yaw)"/>
+   </group>
+
+   <group ns = "$(arg fourth_tb3)">
+     <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+       <param name="publish_frequency" type="double" value="50.0" />
+       <param name="tf_prefix" value="$(arg fourth_tb3)" />
+     </node>
+
+     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg fourth_tb3) -x $(arg fourth_tb3_x_pos) -y $(arg fourth_tb3_y_pos) -z $(arg fourth_tb3_z_pos) -Y $(arg fourth_tb3_yaw) -param robot_description" />
+     <param name="anchor0" value="$(arg first_tb3)"/>
+     <param name="anchor1" value="$(arg second_tb3)"/>
+     <param name="anchor2" value="$(arg third_tb3)"/>
+     <node pkg="turtlebot3_bringup" type="pozyx.py" name="turtlebot3_pozyx" output="screen" args="true $(arg fourth_tb3_x_pos) $(arg fourth_tb3_y_pos) $(arg fourth_tb3_yaw)"/>
+   </group>
 
 </launch>

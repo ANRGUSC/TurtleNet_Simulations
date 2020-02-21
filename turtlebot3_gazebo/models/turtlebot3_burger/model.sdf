@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-  <model name="turtlebot3_burger">  
+  <model name="turtlebot3_burger">
 
     <link name="base">
 
@@ -94,7 +94,7 @@
       <sensor name="hls_lfcd_lds" type="ray">
         <always_on>1</always_on>
         <visualize>0</visualize>
-        <pose>-0.032 0 0.171 0 0 0</pose>
+        <pose>-0.032 0 1.171 0 0 0</pose>
         <update_rate>1800</update_rate>
         <ray>
           <scan>
@@ -116,6 +116,10 @@
             <stddev>0.01</stddev>
           </noise>
         </ray>
+        <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
+            <topicName>scan</topicName>
+            <frameName>base_scan</frameName>
+        </plugin>
       </sensor>
     </link>
 
@@ -181,7 +185,7 @@
         </inertia>
         <mass>0.1</mass>
       </inertial>
-    
+
       <collision name="right_wheel_collision">
         <pose>0.0 -0.08 0.023 -1.57 0 0</pose>
         <geometry>

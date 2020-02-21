@@ -31,14 +31,25 @@
 #define CENTER 0
 #define LEFT   1
 #define RIGHT  2
+#define FARLEFT 3
+#define FARRIGHT 4
 
+// #define LINEAR_VELOCITY  0.3
+// #define ANGULAR_VELOCITY 1.5
 #define LINEAR_VELOCITY  0.3
-#define ANGULAR_VELOCITY 1.5
+#define BACKWARD_LINEAR_VELOCITY -0.2
+
+// #define LINEAR_VELOCITY  0.1
+// #define BACKWARD_LINEAR_VELOCITY -0.1
+
+#define ANGULAR_VELOCITY 0.4
 
 #define GET_TB3_DIRECTION 0
 #define TB3_DRIVE_FORWARD 1
 #define TB3_RIGHT_TURN    2
 #define TB3_LEFT_TURN     3
+#define TB3_DRIVE_BACKWARD_LEFT 4
+#define TB3_DRIVE_BACKWARD_RIGHT 5
 
 class Turtlebot3Drive
 {
@@ -47,6 +58,7 @@ class Turtlebot3Drive
   ~Turtlebot3Drive();
   bool init();
   bool controlLoop();
+  void updatecommandVelocity(double linear, double angular);
 
  private:
   // ROS NodeHandle
@@ -69,13 +81,12 @@ class Turtlebot3Drive
   double check_forward_dist_;
   double check_side_dist_;
 
-  double scan_data_[3] = {0.0, 0.0, 0.0};
+  double scan_data_[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
 
   double tb3_pose_;
   double prev_tb3_pose_;
 
   // Function prototypes
-  void updatecommandVelocity(double linear, double angular);
   void laserScanMsgCallBack(const sensor_msgs::LaserScan::ConstPtr &msg);
   void odomMsgCallBack(const nav_msgs::Odometry::ConstPtr &msg);
 };

@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="lava_tube">
+    <static>true</static>
+    <link name="lava_tube_link">
+      <pose>0 0 0 0 0 0</pose>
+      <collision name="lava_tube_collision">
+        <geometry>
+          <mesh>
+            <uri>model://lava_tube/lava_tube.dae</uri>
+            <scale>4 4 4</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="lava_tube_visual">
+        <geometry>
+          <mesh>
+            <uri>model://lava_tube/lava_tube.dae</uri>
+            <scale>4 4 4</scale>
+          </mesh>
+        </geometry>
+        <cast_shadows>false</cast_shadows>
+        <material>
+          <ambient>0.3 0.5 0.3 1</ambient>
+          <diffuse>0.5 0.7 0.5 1</diffuse>
+          <specular>0.5 0.7 0.5 1</specular>
+          <emissive>0 0 0 1</emissive>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

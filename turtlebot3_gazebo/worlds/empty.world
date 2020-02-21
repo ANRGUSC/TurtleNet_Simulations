@@ -17,6 +17,48 @@
       <uri>model://ground_plane</uri>
     </include>
 
+    <model name="wirelessReceiver">
+      <static>true</static>
+      <pose>0 -3 0.025 0 0 0</pose>
+      <link name="link">
+        <inertial>
+          <mass>0.1</mass>
+        </inertial>
+        <visual name="base">
+          <geometry>
+            <box>
+              <size>.05 .05 .05</size>
+            </box>
+          </geometry>
+        </visual>
+        <visual name="antenna">
+          <pose>0 0 .04 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>.005</radius>
+              <length>.07</length>
+            </cylinder>
+          </geometry>
+        </visual>
+        <sensor name="wirelessTransmitter" type="wireless_transmitter">
+          <always_on>1</always_on>
+          <update_rate>1</update_rate>
+          <visualize>true</visualize>
+          <transceiver>
+            <essid>osrf</essid>
+            <frequency>2442.0</frequency>
+            <power>14.5</power>
+            <gain>2.6</gain>
+          </transceiver>
+          <!-- <plugin name="gazebo_txrx" filename="libgazebo_txrx.so">
+              <topicName>pozyx_txrx</topicName>
+              <frameName>base_footprint</frameName>
+          </plugin> -->
+        </sensor>
+      </link>
+    </model>
+
+
     <physics type="ode">
       <real_time_update_rate>1000.0</real_time_update_rate>
       <max_step_size>0.001</max_step_size>
