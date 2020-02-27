@@ -106,119 +106,29 @@ void Turtlebot3Drive::updatecommandVelocity(double linear, double angular)
 *******************************************************************************/
 bool Turtlebot3Drive::controlLoop()
 {
-    bool leftclose;
-    if (scan_data_[LEFT] < check_side_dist_ || scan_data_[FARLEFT] < check_side_dist_) {
-        leftclose = true;
-    } else {leftclose = false;}
+    static uint8_t state = 0;
 
-    bool rightclose;
-    if (scan_data_[RIGHT] < check_side_dist_ || scan_data_[FARRIGHT] < check_side_dist_) {
-        rightclose = true;
-    } else {rightclose = false;}
+    /* Check if forward direction is clear */
+    if(scan_data_[CENTER] > check_forward_dist_){
+      state = MOVE_FORWARD;
+    }
+    else{
+      state = STOP;
+    }
 
-    bool centerclose;
-    if (scan_data_[CENTER] < check_forward_dist_) {
-        centerclose = true;
-    } else {centerclose = false;}
+    switch (state){
+      case MOVE_FORWARD:
+        updatecommandVelocity(0.2,0.0);
+        break;
 
-  static uint8_t turtlebot3_state_num = 0;
+      case STOP:
+        updatecommandVelocity(0.0,0.0);
+        break;
 
-  switch(turtlebot3_state_num)
-  {
-    case GET_TB3_DIRECTION:
-    // ROS_INFO("%.3f, %.3f %.3f, %.3f, %.3f", scan_data_[FARLEFT], scan_data_[LEFT], scan_data_[CENTER], scan_data_[RIGHT], scan_data_[FARRIGHT]);
-      if (!centerclose)
-      {
-        if (leftclose && !rightclose)
-        {
-          // ROS_INFO("turn right");
-          prev_tb3_pose_ = tb3_pose_;
-          turtlebot3_state_num = TB3_RIGHT_TURN;
-        }
-        else if (rightclose && !leftclose)
-        {
-          // ROS_INFO("turn left");
-          prev_tb3_pose_ = tb3_pose_;
-          turtlebot3_state_num = TB3_LEFT_TURN;
-        }
-        else
-        {
-          // ROS_INFO("forward");
-          turtlebot3_state_num = TB3_DRIVE_FORWARD;
-        }
-      }
-
-      if (centerclose)
-      {
-        if (leftclose) {
-            prev_tb3_pose_ = tb3_pose_;
-            // ROS_INFO("backward (left)");
-            turtlebot3_state_num = TB3_DRIVE_BACKWARD_LEFT;
-        } else {
-            prev_tb3_pose_ = tb3_pose_;
-            // ROS_INFO("backward (right)");
-            turtlebot3_state_num = TB3_DRIVE_BACKWARD_RIGHT;
-        }
-
-      }
-      break;
-
-
-    // case GET_TB3_DIRECTION:
-    //   if (scan_data_[CENTER] > check_forward_dist_) {
-    //       prev_tb3_pose_ = tb3_pose_;
-    //       turtlebot3_state_num = TB3_DRIVE_FORWARD;
-    //   } else {
-    //       if (scan_data_[LEFT] <= check_side_dist_) {
-    //           if (scan_data_[RIGHT] > check_side_dist_) {
-    //               prev_tb3_pose_ = tb3_pose_;
-    //               turtlebot3_state_num = TB3_RIGHT_TURN;
-    //           } else {
-    //               prev_tb3_pose_ = tb3_pose_;
-    //               turtlebot3_state_num = TB3_DRIVE_BACKWARD;
-    //           }
-    //       } else {
-    //           prev_tb3_pose_ = tb3_pose_;
-    //           turtlebot3_state_num = TB3_LEFT_TURN;
-    //       }
-    //   }
-    //   break;
-
-    case TB3_DRIVE_FORWARD:
-      updatecommandVelocity(LINEAR_VELOCITY, 0.0);
-      turtlebot3_state_num = GET_TB3_DIRECTION;
-      break;
-
-    case TB3_DRIVE_BACKWARD_LEFT:
-      updatecommandVelocity(BACKWARD_LINEAR_VELOCITY, -1*ANGULAR_VELOCITY);
-      turtlebot3_state_num = GET_TB3_DIRECTION;
-      break;
-
-    case TB3_DRIVE_BACKWARD_RIGHT:
-      updatecommandVelocity(BACKWARD_LINEAR_VELOCITY, ANGULAR_VELOCITY);
-      turtlebot3_state_num = GET_TB3_DIRECTION;
-      break;
-
-    case TB3_RIGHT_TURN:
-      // if (fabs(prev_tb3_pose_ - tb3_pose_) >= escape_range_)
-      //   turtlebot3_state_num = GET_TB3_DIRECTION;
-      // else
-      updatecommandVelocity(0.1, -1*ANGULAR_VELOCITY);
-      turtlebot3_state_num = GET_TB3_DIRECTION;
-      break;
-
-    case TB3_LEFT_TURN:
-      // if (fabs(prev_tb3_pose_ - tb3_pose_) >= escape_range_)
-      //   turtlebot3_state_num = GET_TB3_DIRECTION;
-      // else
-      updatecommandVelocity(0.1, ANGULAR_VELOCITY);
-      turtlebot3_state_num = GET_TB3_DIRECTION;
-      break;
-
-    default:
-      turtlebot3_state_num = GET_TB3_DIRECTION;
-      break;
-  }
+      default:
+        updatecommandVelocity(0.0,0.0);
+        break;
+    }
 
   return true;
 }
@@ -233,43 +143,8 @@ int main(int argc, char* argv[])
 
   ros::Rate loop_rate(125);
 
-  // ROS_INFO("get namespace...");
   std::string ns = ros::this_node::getNamespace();
   ROS_INFO("%s",ns.c_str());
-  // ROS_INFO("%u",ns.compare("/"));
-
-  // while (ros::ok())
-  // {
-  //   ros::Time rightnow = ros::Time::now();
-  //   // ROS_INFO("%d",rightnow.sec%20);
-  //
-  //   if (ns.compare("//tb3_0")==0) {
-  //       if (rightnow.sec%20==0 || rightnow.sec%20==1 || rightnow.sec%20==2 || rightnow.sec%20==3 || rightnow.sec%20==4) {
-  //           // ROS_INFO("tb3_0 drives");
-  //           turtlebot3_drive.controlLoop();
-  //       } else {turtlebot3_drive.updatecommandVelocity(0.0, 0.0);}}
-  //
-  //   if (ns.compare("//tb3_1")==0) {
-  //       if (rightnow.sec%20==5 || rightnow.sec%20==6 || rightnow.sec%20==7 || rightnow.sec%20==8 || rightnow.sec%20==9) {
-  //           // ROS_INFO("tb3_1 drives");
-  //           turtlebot3_drive.controlLoop();
-  //       } else {turtlebot3_drive.updatecommandVelocity(0.0, 0.0);}}
-  //
-  //   if (ns.compare("//tb3_2")==0) {
-  //       if (rightnow.sec%20==10 || rightnow.sec%20==11 || rightnow.sec%20==12 || rightnow.sec%20==13 || rightnow.sec%20==14) {
-  //           // ROS_INFO("tb3_2 drives");
-  //           turtlebot3_drive.controlLoop();
-  //       } else {turtlebot3_drive.updatecommandVelocity(0.0, 0.0);}}
-  //
-  //   if (ns.compare("//tb3_3")==0) {
-  //       if (rightnow.sec%20==15 || rightnow.sec%20==16 || rightnow.sec%20==17 || rightnow.sec%20==18 || rightnow.sec%20==19) {
-  //           // ROS_INFO("tb3_3 drives");
-  //           turtlebot3_drive.controlLoop();
-  //       } else {turtlebot3_drive.updatecommandVelocity(0.0, 0.0);}}
-  //
-  //   ros::spinOnce();
-  //   loop_rate.sleep();
-  //   }
 
   while (ros::ok())
   {

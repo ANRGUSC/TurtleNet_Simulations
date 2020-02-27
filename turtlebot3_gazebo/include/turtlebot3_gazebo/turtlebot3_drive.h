@@ -44,12 +44,8 @@
 
 #define ANGULAR_VELOCITY 0.4
 
-#define GET_TB3_DIRECTION 0
-#define TB3_DRIVE_FORWARD 1
-#define TB3_RIGHT_TURN    2
-#define TB3_LEFT_TURN     3
-#define TB3_DRIVE_BACKWARD_LEFT 4
-#define TB3_DRIVE_BACKWARD_RIGHT 5
+#define MOVE_FORWARD  0
+#define STOP          1
 
 class Turtlebot3Drive
 {
