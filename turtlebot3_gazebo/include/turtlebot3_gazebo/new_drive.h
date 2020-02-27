@@ -72,6 +72,8 @@ class Turtlebot3Drive
   double check_forward_dist_;
   double check_side_dist_;
 
+  bool got_first_scan;
+
   double scan_data_[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
 
   double tb3_pose_;

@@ -25,6 +25,7 @@
   <arg name="fourth_tb3_z_pos" default=" 0.0"/>
   <arg name="fourth_tb3_yaw"   default=" 0.0"/> -->
 
+<!-- Y MAZE -->
   <arg name="first_tb3_x_pos" default=" -17.0"/>
   <arg name="first_tb3_y_pos" default=" -1.5"/>
   <arg name="first_tb3_z_pos" default=" 0.0"/>
@@ -89,24 +90,45 @@
 
   <!-- Y LAVA TUBE -->
     <!-- <arg name="first_tb3_x_pos" default=" 1.0"/>
-    <arg name="first_tb3_y_pos" default=" -2.0"/>
+    <arg name="first_tb3_y_pos" default=" -3.0"/>
     <arg name="first_tb3_z_pos" default=" 0.0"/>
     <arg name="first_tb3_yaw"   default=" 1.57"/>
 
     <arg name="second_tb3_x_pos" default=" 1.0"/>
-    <arg name="second_tb3_y_pos" default=" -4.0"/>
+    <arg name="second_tb3_y_pos" default=" 0.0"/>
     <arg name="second_tb3_z_pos" default=" 0.0"/>
     <arg name="second_tb3_yaw"   default=" 1.57"/>
 
     <arg name="third_tb3_x_pos" default=" -1.0"/>
-    <arg name="third_tb3_y_pos" default=" -4.0"/>
+    <arg name="third_tb3_y_pos" default=" 0.0"/>
     <arg name="third_tb3_z_pos" default=" 0.0"/>
     <arg name="third_tb3_yaw"   default=" 1.57"/>
 
     <arg name="fourth_tb3_x_pos" default=" -1.0"/>
-    <arg name="fourth_tb3_y_pos" default=" -2.0"/>
+    <arg name="fourth_tb3_y_pos" default=" -3.0"/>
     <arg name="fourth_tb3_z_pos" default=" 0.0"/>
     <arg name="fourth_tb3_yaw"   default=" 1.57"/> -->
+
+<!-- LOOP LAVA TUBE -->
+    <!-- <arg name="first_tb3_x_pos" default=" -9.0"/>
+    <arg name="first_tb3_y_pos" default=" -10.0"/>
+    <arg name="first_tb3_z_pos" default=" -0.49"/>
+    <arg name="first_tb3_yaw"   default=" 0"/>
+
+    <arg name="second_tb3_x_pos" default=" -9.0"/>
+    <arg name="second_tb3_y_pos" default=" -8.0"/>
+    <arg name="second_tb3_z_pos" default=" -0.48"/>
+    <arg name="second_tb3_yaw"   default=" 0"/>
+
+    <arg name="third_tb3_x_pos" default=" -7.0"/>
+    <arg name="third_tb3_y_pos" default=" -14.0"/>
+    <arg name="third_tb3_z_pos" default=" -0.71"/>
+    <arg name="third_tb3_yaw"   default=" 0"/>
+
+    <arg name="fourth_tb3_x_pos" default=" -7.0"/>
+    <arg name="fourth_tb3_y_pos" default=" -12.0"/>
+    <arg name="fourth_tb3_z_pos" default=" -0.6"/>
+    <arg name="fourth_tb3_yaw"   default=" 0"/> -->
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_empty_world.world"/> -->
@@ -116,7 +138,7 @@
     <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/wall_ytunnel_obstacles.world"/>
     <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/infinite.world"/> -->
     <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/maze.world"/> -->
-    <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/lava-tunnel-scaled.world"/> -->
+    <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/loop.world"/> -->
     <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/y_lava_tube.world"/> -->
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
@@ -176,7 +198,6 @@
     <param name="anchor2" value="$(arg third_tb3)"/>
     <node pkg="turtlebot3_bringup" type="pozyx.py" name="turtlebot3_pozyx" output="screen" args="true $(arg fourth_tb3_x_pos) $(arg fourth_tb3_y_pos) $(arg fourth_tb3_yaw)"/>
   </group>
-
   <!-- <node pkg="turtlebot3_bringup" type="log_position.py" name="log_position" output="screen"/> -->
 
 </launch>

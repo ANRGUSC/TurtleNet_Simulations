@@ -42,8 +42,8 @@ bool Turtlebot3Drive::init()
 
   // initialize variables
   escape_range_       = 5.0 * DEG2RAD;
-  check_forward_dist_ = 0.5;
-  check_side_dist_    = 0.4;
+  check_forward_dist_ = 0.6;
+  check_side_dist_    = 0.25;
 
   tb3_pose_ = 0.0;
   prev_tb3_pose_ = 0.0;
@@ -54,6 +54,8 @@ bool Turtlebot3Drive::init()
   // initialize subscribers
   laser_scan_sub_  = nh_.subscribe("scan", 10, &Turtlebot3Drive::laserScanMsgCallBack, this);
   odom_sub_ = nh_.subscribe("odom", 10, &Turtlebot3Drive::odomMsgCallBack, this);
+
+  got_first_scan = false;
 
   return true;
 }
@@ -68,7 +70,8 @@ void Turtlebot3Drive::odomMsgCallBack(const nav_msgs::Odometry::ConstPtr &msg)
 
 void Turtlebot3Drive::laserScanMsgCallBack(const sensor_msgs::LaserScan::ConstPtr &msg)
 {
-  uint16_t scan_angle[5] = {330, 353, 0, 7, 30};
+  // uint16_t scan_angle[5] = {330, 353, 0, 7, 30};
+  uint16_t scan_angle[5] = {30, 7, 0, 353, 330};
 
   for (int num = 0; num < 5; num++)
   {
@@ -84,6 +87,7 @@ void Turtlebot3Drive::laserScanMsgCallBack(const sensor_msgs::LaserScan::ConstPt
       scan_data_[num] = msg->ranges.at(scan_angle[num]);
     }
   }
+  got_first_scan = true;
   ROS_INFO("%.3f, %.3f, %.3f, %.3f, %.3f",scan_data_[LEFT],scan_data_[L], scan_data_[CENTER],scan_data_[R],scan_data_[RIGHT]);
 }
 
@@ -108,37 +112,43 @@ bool Turtlebot3Drive::controlLoop()
   {
     case GET_TB3_DIRECTION:
 
-      if (scan_data_[CENTER] < check_forward_dist_ && scan_data_[L] < check_forward_dist_ && scan_data_[R] < check_forward_dist_) {
-          ROS_DEBUG("MY PATH IS ALL BLOCKED");
+      if (!got_first_scan){
+          ROS_INFO("WAITNG FOR SCAN");
+          turtlebot3_state_num = 0;
+      }
+
+      else if (scan_data_[CENTER] < check_forward_dist_ && scan_data_[L] < check_forward_dist_ && scan_data_[R] < check_forward_dist_) {
+          ROS_INFO("MY PATH IS ALL BLOCKED");
           escape_range_ = 90 * DEG2RAD;
           if (scan_data_[L] < scan_data_[R])
           {
-            ROS_DEBUG("TURN RIGHT");
+            ROS_INFO("TURN RIGHT");
             prev_tb3_pose_ = tb3_pose_;
             turtlebot3_state_num = TB3_RIGHT_TURN;
           }
           else
           {
-            ROS_DEBUG("TURN LEFT");
+            ROS_INFO("TURN LEFT");
             prev_tb3_pose_ = tb3_pose_;
             turtlebot3_state_num = TB3_LEFT_TURN;
           }
       }
+
       else {
           escape_range_ = 5.0 * DEG2RAD;
-          if (scan_data_[CENTER] > check_forward_dist_ && scan_data_[L] > check_forward_dist_ && scan_data_[R] > check_forward_dist_)
+          if (scan_data_[CENTER] > check_forward_dist_ && scan_data_[L] > check_forward_dist_ && scan_data_[R] > check_forward_dist_ && scan_data_[LEFT] > check_side_dist_ && scan_data_[RIGHT] > check_side_dist_)
           // if (scan_data_[CENTER] > check_forward_dist_)
           {
-            ROS_DEBUG("NOTHING IN FRONT OF ME");
+            ROS_INFO("NOTHING TOO CLOSE");
             turtlebot3_state_num = TB3_DRIVE_FORWARD;
           }
 
           // if (scan_data_[CENTER] < check_forward_dist_ || scan_data_[L] < check_forward_dist_)
           // if (scan_data_[CENTER] < check_forward_dist_)
           // else if (scan_data_[L] < check_side_dist_ || scan_data_[LEFT] < check_side_dist_)
-          else if (scan_data_[L] < scan_data_[R])
+          else if (scan_data_[L] < scan_data_[R] || scan_data_[LEFT] < check_side_dist_)
           {
-            ROS_DEBUG("My slight left has a closer obstacle");
+            ROS_INFO("My slight left has a closer obstacle");
             prev_tb3_pose_ = tb3_pose_;
             turtlebot3_state_num = TB3_RIGHT_TURN;
           }
@@ -147,7 +157,7 @@ bool Turtlebot3Drive::controlLoop()
           // else if (scan_data_[CENTER] < check_forward_dist_ || scan_data_[R] < check_forward_dist_)
           else
           {
-            ROS_DEBUG("My slight right has a closer obstacle");
+            ROS_INFO("My slight right has a closer obstacle");
             prev_tb3_pose_ = tb3_pose_;
             turtlebot3_state_num = TB3_LEFT_TURN;
           }
@@ -166,7 +176,7 @@ bool Turtlebot3Drive::controlLoop()
         turtlebot3_state_num = GET_TB3_DIRECTION;
       else
         // updatecommandVelocity(0.0, -1 * ANGULAR_VELOCITY);
-        updatecommandVelocity(0.0, ANGULAR_VELOCITY);
+        updatecommandVelocity(0.0, -1 * ANGULAR_VELOCITY);
       break;
 
     case TB3_LEFT_TURN:
@@ -175,7 +185,7 @@ bool Turtlebot3Drive::controlLoop()
         turtlebot3_state_num = GET_TB3_DIRECTION;
       else
         // updatecommandVelocity(0.0, ANGULAR_VELOCITY);
-        updatecommandVelocity(0.0, -1 * ANGULAR_VELOCITY);
+        updatecommandVelocity(0.0, ANGULAR_VELOCITY);
       break;
 
     default:
