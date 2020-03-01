@@ -42,14 +42,15 @@ bool Turtlebot3Drive::init()
 
   // initialize variables
   escape_range_       = 5.0 * DEG2RAD;
-  check_forward_dist_ = 0.6;
+  check_forward_dist_ = 0.8;
   check_side_dist_    = 0.25;
 
   tb3_pose_ = 0.0;
   prev_tb3_pose_ = 0.0;
 
   // initialize publishers
-  cmd_vel_pub_   = nh_.advertise<geometry_msgs::Twist>(cmd_vel_topic_name, 10);
+  // cmd_vel_pub_   = nh_.advertise<geometry_msgs::Twist>(cmd_vel_topic_name, 10);
+  cmd_vel_pub_   = nh_.advertise<geometry_msgs::Twist>(cmd_vel_topic_name, 1);
 
   // initialize subscribers
   laser_scan_sub_  = nh_.subscribe("scan", 10, &Turtlebot3Drive::laserScanMsgCallBack, this);
