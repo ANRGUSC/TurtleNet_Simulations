@@ -34,7 +34,7 @@
 #define R  3
 #define RIGHT 4
 
-#define LINEAR_VELOCITY  0.08
+#define LINEAR_VELOCITY  0.15
 #define ANGULAR_VELOCITY 0.2
 
 #define GET_TB3_DIRECTION 0
@@ -71,6 +71,8 @@ class Turtlebot3Drive
   double escape_range_;
   double check_forward_dist_;
   double check_side_dist_;
+
+  bool got_first_scan;
 
   double scan_data_[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
 
