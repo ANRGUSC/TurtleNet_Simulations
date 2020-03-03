@@ -1,0 +1,188 @@
+<launch>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="first_tb3"  default="tb3_0"/>
+  <arg name="second_tb3" default="tb3_1"/>
+  <arg name="third_tb3"  default="tb3_2"/>
+  <arg name="fourth_tb3" default="tb3_3"/>
+
+  <!-- <arg name="first_tb3_x_pos" default=" -1.0"/>
+  <arg name="first_tb3_y_pos" default=" -2.0"/>
+  <arg name="first_tb3_z_pos" default=" 0.0"/>
+  <arg name="first_tb3_yaw"   default=" 0.0"/>
+  <arg name="second_tb3_x_pos" default=" -1.0"/>
+  <arg name="second_tb3_y_pos" default=" 2.0"/>
+  <arg name="second_tb3_z_pos" default=" 0.0"/>
+  <arg name="second_tb3_yaw"   default=" 0.0"/>
+  <arg name="third_tb3_x_pos" default=" 1.0"/>
+  <arg name="third_tb3_y_pos" default=" -2.0"/>
+  <arg name="third_tb3_z_pos" default=" 0.0"/>
+  <arg name="third_tb3_yaw"   default=" 0.0"/>
+  <arg name="fourth_tb3_x_pos" default=" 1.0"/>
+  <arg name="fourth_tb3_y_pos" default=" 2.0"/>
+  <arg name="fourth_tb3_z_pos" default=" 0.0"/>
+  <arg name="fourth_tb3_yaw"   default=" 0.0"/> -->
+
+<!-- Y MAZE -->
+  <arg name="first_tb3_x_pos" default=" -17.0"/>
+  <arg name="first_tb3_y_pos" default=" -1.5"/>
+  <arg name="first_tb3_z_pos" default=" 0.0"/>
+  <arg name="first_tb3_yaw"   default=" 0.0"/>
+
+  <arg name="second_tb3_x_pos" default=" -17.0"/>
+  <arg name="second_tb3_y_pos" default=" 1.5"/>
+  <arg name="second_tb3_z_pos" default=" 0.0"/>
+  <arg name="second_tb3_yaw"   default=" 0.0"/>
+
+  <arg name="third_tb3_x_pos" default=" -14.0"/>
+  <arg name="third_tb3_y_pos" default=" -1.5"/>
+  <arg name="third_tb3_z_pos" default=" 0.0"/>
+  <arg name="third_tb3_yaw"   default=" 0.0"/>
+
+  <arg name="fourth_tb3_x_pos" default=" -14.0"/>
+  <arg name="fourth_tb3_y_pos" default=" 1.5"/>
+  <arg name="fourth_tb3_z_pos" default=" 0.0"/>
+  <arg name="fourth_tb3_yaw"   default=" 0.0"/>
+
+<!-- INFINITE -->
+  <!-- <arg name="first_tb3_x_pos" default=" -0.5"/>
+  <arg name="first_tb3_y_pos" default=" -14"/>
+  <arg name="first_tb3_z_pos" default=" 0.0"/>
+  <arg name="first_tb3_yaw"   default=" 0.0"/>
+  <arg name="second_tb3_x_pos" default=" 0.5"/>
+  <arg name="second_tb3_y_pos" default=" -14"/>
+  <arg name="second_tb3_z_pos" default=" 0.0"/>
+  <arg name="second_tb3_yaw"   default=" 0.0"/>
+  <arg name="third_tb3_x_pos" default=" -0.5"/>
+  <arg name="third_tb3_y_pos" default=" -18"/>
+  <arg name="third_tb3_z_pos" default=" 0.0"/>
+  <arg name="third_tb3_yaw"   default=" 0.0"/>
+  <arg name="fourth_tb3_x_pos" default=" 0.5"/>
+  <arg name="fourth_tb3_y_pos" default=" -18"/>
+  <arg name="fourth_tb3_z_pos" default=" 0.0"/>
+  <arg name="fourth_tb3_yaw"   default=" 0.0"/> -->
+
+<!-- MAZE -->
+  <!-- <arg name="first_tb3_x_pos" default=" -0.5"/>
+  <arg name="first_tb3_y_pos" default=" -7"/>
+  <arg name="first_tb3_z_pos" default=" 0.0"/>
+  <arg name="first_tb3_yaw"   default=" 0.0"/>
+  <arg name="second_tb3_x_pos" default=" 0.5"/>
+  <arg name="second_tb3_y_pos" default=" -7"/>
+  <arg name="second_tb3_z_pos" default=" 0.0"/>
+  <arg name="second_tb3_yaw"   default=" 0.0"/>
+  <arg name="third_tb3_x_pos" default=" -0.5"/>
+  <arg name="third_tb3_y_pos" default=" -8"/>
+  <arg name="third_tb3_z_pos" default=" 0.0"/>
+  <arg name="third_tb3_yaw"   default=" 0.0"/>
+  <arg name="fourth_tb3_x_pos" default=" 0.5"/>
+  <arg name="fourth_tb3_y_pos" default=" -8"/>
+  <arg name="fourth_tb3_z_pos" default=" 0.0"/>
+  <arg name="fourth_tb3_yaw"   default=" 0.0"/> -->
+
+  <!-- Y LAVA TUBE -->
+    <!-- <arg name="first_tb3_x_pos" default=" 1.0"/>
+    <arg name="first_tb3_y_pos" default=" -3.0"/>
+    <arg name="first_tb3_z_pos" default=" 0.0"/>
+    <arg name="first_tb3_yaw"   default=" 1.57"/>
+    <arg name="second_tb3_x_pos" default=" 1.0"/>
+    <arg name="second_tb3_y_pos" default=" 0.0"/>
+    <arg name="second_tb3_z_pos" default=" 0.0"/>
+    <arg name="second_tb3_yaw"   default=" 1.57"/>
+    <arg name="third_tb3_x_pos" default=" -1.0"/>
+    <arg name="third_tb3_y_pos" default=" 0.0"/>
+    <arg name="third_tb3_z_pos" default=" 0.0"/>
+    <arg name="third_tb3_yaw"   default=" 1.57"/>
+    <arg name="fourth_tb3_x_pos" default=" -1.0"/>
+    <arg name="fourth_tb3_y_pos" default=" -3.0"/>
+    <arg name="fourth_tb3_z_pos" default=" 0.0"/>
+    <arg name="fourth_tb3_yaw"   default=" 1.57"/> -->
+
+<!-- LOOP LAVA TUBE -->
+    <!-- <arg name="first_tb3_x_pos" default=" -9.0"/>
+    <arg name="first_tb3_y_pos" default=" -10.0"/>
+    <arg name="first_tb3_z_pos" default=" -0.49"/>
+    <arg name="first_tb3_yaw"   default=" 0"/>
+    <arg name="second_tb3_x_pos" default=" -9.0"/>
+    <arg name="second_tb3_y_pos" default=" -8.0"/>
+    <arg name="second_tb3_z_pos" default=" -0.48"/>
+    <arg name="second_tb3_yaw"   default=" 0"/>
+    <arg name="third_tb3_x_pos" default=" -7.0"/>
+    <arg name="third_tb3_y_pos" default=" -14.0"/>
+    <arg name="third_tb3_z_pos" default=" -0.71"/>
+    <arg name="third_tb3_yaw"   default=" 0"/>
+    <arg name="fourth_tb3_x_pos" default=" -7.0"/>
+    <arg name="fourth_tb3_y_pos" default=" -12.0"/>
+    <arg name="fourth_tb3_z_pos" default=" -0.6"/>
+    <arg name="fourth_tb3_yaw"   default=" 0"/> -->
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_empty_world.world"/> -->
+    <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/> -->
+    <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/wall_ytunnel.world"/> -->
+    <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/wall_ytunnel_features.world"/> -->
+    <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/wall_ytunnel_obstacles.world"/>
+    <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/infinite.world"/> -->
+    <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/maze.world"/> -->
+    <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/loop.world"/> -->
+    <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/y_lava_tube.world"/> -->
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <group ns = "$(arg first_tb3)">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="$(arg first_tb3)" />
+    </node>
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg first_tb3) -x $(arg first_tb3_x_pos) -y $(arg first_tb3_y_pos) -z $(arg first_tb3_z_pos) -Y $(arg first_tb3_yaw) -param robot_description" />
+    <param name="anchor0" value="$(arg second_tb3)"/>
+    <param name="anchor1" value="$(arg third_tb3)"/>
+    <param name="anchor2" value="$(arg fourth_tb3)"/>
+    <node pkg="turtlebot3_bringup" type="pozyx.py" name="turtlebot3_pozyx" output="screen" args="true $(arg first_tb3_x_pos) $(arg first_tb3_y_pos) $(arg first_tb3_yaw)"/>
+  </group>
+
+  <group ns = "$(arg second_tb3)">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="$(arg second_tb3)" />
+    </node>
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg second_tb3) -x $(arg second_tb3_x_pos) -y $(arg second_tb3_y_pos) -z $(arg second_tb3_z_pos) -Y $(arg second_tb3_yaw) -param robot_description" />
+    <param name="anchor0" value="$(arg first_tb3)"/>
+    <param name="anchor1" value="$(arg third_tb3)"/>
+    <param name="anchor2" value="$(arg fourth_tb3)"/>
+    <node pkg="turtlebot3_bringup" type="pozyx.py" name="turtlebot3_pozyx" output="screen" args="true $(arg second_tb3_x_pos) $(arg second_tb3_y_pos) $(arg second_tb3_yaw)"/>
+  </group>
+
+  <group ns = "$(arg third_tb3)">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="$(arg third_tb3)" />
+    </node>
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg third_tb3) -x $(arg third_tb3_x_pos) -y $(arg third_tb3_y_pos) -z $(arg third_tb3_z_pos) -Y $(arg third_tb3_yaw) -param robot_description" />
+    <param name="anchor0" value="$(arg first_tb3)"/>
+    <param name="anchor1" value="$(arg second_tb3)"/>
+    <param name="anchor2" value="$(arg fourth_tb3)"/>
+    <node pkg="turtlebot3_bringup" type="pozyx.py" name="turtlebot3_pozyx" output="screen" args="true $(arg third_tb3_x_pos) $(arg third_tb3_y_pos) $(arg third_tb3_yaw)"/>
+  </group>
+
+  <group ns = "$(arg fourth_tb3)">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="$(arg fourth_tb3)" />
+    </node>
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg fourth_tb3) -x $(arg fourth_tb3_x_pos) -y $(arg fourth_tb3_y_pos) -z $(arg fourth_tb3_z_pos) -Y $(arg fourth_tb3_yaw) -param robot_description" />
+    <param name="anchor0" value="$(arg first_tb3)"/>
+    <param name="anchor1" value="$(arg second_tb3)"/>
+    <param name="anchor2" value="$(arg third_tb3)"/>
+    <node pkg="turtlebot3_bringup" type="pozyx.py" name="turtlebot3_pozyx" output="screen" args="true $(arg fourth_tb3_x_pos) $(arg fourth_tb3_y_pos) $(arg fourth_tb3_yaw)"/>
+  </group>
+  <!-- <node pkg="turtlebot3_bringup" type="log_position.py" name="log_position" output="screen"/> -->
+
+</launch>
