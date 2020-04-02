@@ -1,4 +1,4 @@
-# TurtleBot3
+This package replaces the turtlebot3_simulations package in your catkin workspace.
 
 ## ROS Packages for TurtleBot3 Simulations
 
