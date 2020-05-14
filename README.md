@@ -28,7 +28,7 @@ To use this repository, review the turtlebot3_simulations installation instructi
 In your ~/catkin_ws/src directory, where you would have cloned the turtlebot3_simulations package, clone this repository and re-build your workspace.
 
 Original source code:  
-http://wiki.ros.org/turtlebot3_simulations  
+https://github.com/ROBOTIS-GIT/turtlebot3_simulations  
 
 #### turtlebot3_gazebo/launch
 `multi_turltebot3_world.launch` launches TurtleNet in Gazebo and specifies the `.world` file to use.
